@@ -6,7 +6,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 // OpenZeppelin Contracts v4.4.1 (token/ERC20/ERC20.sol)
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.4/contracts/token/ERC20/ERC20.sol";
+// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.4/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 // Organik Contracts v0.0.1 (contracts/OrganikDAO.sol)
@@ -108,7 +109,7 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         proposal.receiverAddress = payable(receiverAddress);
         proposal.proposer = payable(msg.sender);
         proposal.amount = amount;
-        proposal.livePeriod = block.timestamp + votingPeriod;
+        proposal.livePeriod = block.timestamp + votingPeriodA;
         proposal.isPaid = false;
         proposal.isCompleted = false;
         proposal.imageId = imageId;
