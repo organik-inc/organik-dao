@@ -12,26 +12,20 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 // Organik Contracts v0.0.1 (contracts/OrganikDAO.sol)
 contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
-
     bytes32 public constant FARMER = keccak256("FARMER");
     bytes32 public constant MEMBER = keccak256("MEMBER");
     bytes32 public constant STAKEHOLDER = keccak256("STAKEHOLDER");
-
     uint32 constant votingPeriodA = 1 days;
     uint32 constant votingPeriodB = 2 days;
     uint32 constant votingPeriodC = 3 days;
-
     uint256 public proposalsCount = 0;
     uint256 public eventsCount = 0;
     uint256 public bookingsCount = 0;
-
     constructor () public ERC20 ("OrganikDAO", "ORGANIK") {
         _mint(msg.sender, 1000000 * (10 ** uint256(decimals()) ) );
         // This line will mint 1M coins to the Contract Address.
     }
-
     // Define all Structs (Keep it simple). Can we map into Moralis DB?
-
     struct Proposal {
         uint256 id;
         uint256 amount;
@@ -48,20 +42,17 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         Funding[] funders;
         string imageId;
     }
-
     struct Funding {
         address payer;
         uint256 amount;
         uint256 timestamp;
     }
-
     // Define mappings (key => value maps)
     mapping(address => uint256) private stakeholders;
     mapping(address => uint256) private members;
     mapping(address => uint256) private farmers;
     mapping(uint256 => Proposal) private proposals;
     mapping(address => uint256[]) private votes;
-
     // Define events (Similar to hooks)
     event NewMember(address indexed fromAddress, uint256 amount);
     event NewProposal(address indexed proposer, uint256 amount);
@@ -70,25 +61,29 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         address indexed projectAddress,
         uint256 amount
     );
-
+    event NewTransfer(
+        address indexed senderAddress,
+        address indexed receiverAddress,
+        uint256 amount
+    );
+    event NewBurn(
+        address indexed fromAddress,
+        uint256 amount
+    );
     // Modifiers
     modifier onlyFarmer(string memory message) {
         require(hasRole(FARMER, msg.sender), message);
         _;
     }
-    
     modifier onlyMember(string memory message) {
         require(hasRole(MEMBER, msg.sender), message);
         _;
     }
-
     modifier onlyStakeholder(string memory message) {
         require(hasRole(STAKEHOLDER, msg.sender), message);
         _;
     }
-
-    // Functions.
-
+    // Contract Custom Functions:
     // create Proposal
     function createProposal(
         string calldata title,
@@ -98,7 +93,7 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         string calldata imageId
     ) public payable onlyMember("Only members can create new proposal.") {
         require(
-            msg.value == 5 * 10**18,
+            msg.value == 5 * 10** uint256(decimals()) ,
             "You need to add 5 MATIC to create a proposal"
         );
         uint256 proposalId = proposalsCount;
@@ -116,7 +111,6 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         proposalsCount++;
         emit NewProposal(msg.sender, amount);
     }
-
     // Proposals and Votes.
     function getAllProposals() public view returns (Proposal[] memory) {
         Proposal[] memory tempProposals = new Proposal[](proposalsCount);
@@ -125,7 +119,6 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         }
         return tempProposals;
     }
-
     function getProposal(uint256 proposalId)
         public
         view
@@ -133,7 +126,6 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
     {
         return proposals[proposalId];
     }
-
     function getVotes()
         public
         view
@@ -142,15 +134,13 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
     {
         return votes[msg.sender];
     }
-
     // Vote on Proposal
     function vote(uint256 proposalId, bool inFavour)
         public
         onlyStakeholder("Only Stakeholders can vote on a proposal.")
     {
         Proposal storage proposal = proposals[proposalId];
-
-        if (proposal.isCompleted || proposal.livePeriodA <= block.timestamp) {
+        if (proposal.isCompleted || proposal.livePeriod <= block.timestamp) {
             proposal.isCompleted = true;
             revert("Time period of this proposal is ended (1 day).");
         }
@@ -158,13 +148,11 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
             if (proposal.id == votes[msg.sender][i])
                 revert("You can only vote once.");
         }
-
         if (inFavour) proposal.voteInFavor++;
         else proposal.voteAgainst++;
         votes[msg.sender].push(proposalId);
         _mint(msg.sender, 1 * (10 ** uint256(decimals()) ) );
     }
-
     // Get ORGANIK Balances
     function getOrganikBal()
         public
@@ -173,34 +161,21 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
     {
         return balanceOf(msg.sender);
     }
-
     function getOrganikSupply()
         public
         view
         returns (uint256)
     {
-        return totalSupply(msg.sender);
+        return totalSupply();
     }
-
-    function burnOrganik(
-        uint256 amount)
-        public
-        view
-        returns (uint256)
-    {
-        return _burn(msg.sender, amount);
+    function burnOrganik(uint256 amount) public virtual {
+        emit NewBurn(msg.sender, amount);
+        _burn(msg.sender, amount);
     }
-
-    function sendOrganik(
-        address receiverAddress,
-        uint256 amount)
-        public
-        view
-        returns (uint256)
-    {
-        return transfer(receiverAddress, amount);
+    function sendOrganik(address receiverAddress, uint256 amount) public virtual {
+        emit NewTransfer(msg.sender, receiverAddress, amount);
+        transfer(receiverAddress, amount);
     }
-
     // Get MATIC Balances
     function getStakeholderBal()
         public
@@ -210,7 +185,6 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
     {
         return stakeholders[msg.sender];
     }
-
     function getMemberBal()
         public
         view
@@ -219,7 +193,6 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
     {
         return members[msg.sender];
     }
-
     function getFarmerBal()
         public
         view
@@ -228,7 +201,6 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
     {
         return farmers[msg.sender];
     }
-
     // Fund MATIC into Treasury
     function provideFunds(uint256 proposalId, uint256 fundAmount)
         public
@@ -252,7 +224,6 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         }
         _mint(msg.sender, fundAmount * (10 ** uint256(decimals()) ) );
     }
-
     // Release MATIC from Treasury
     function releaseFunding(uint256 proposalId)
         public
@@ -268,7 +239,6 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         proposal.isPaid = true;
         proposal.isCompleted = true;
     }
-
     // Create STAKEHOLDER
     function createStakeholder() public payable {
         uint256 amount = msg.value;
@@ -302,6 +272,4 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         // Mint X ORGANIK Tokens
         _mint(msg.sender, amount * (10 ** uint256(decimals()) ) );
     }
-    
-
 }
