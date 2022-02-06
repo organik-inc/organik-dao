@@ -8,7 +8,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-// Organik Contracts v0.0.2 (contracts/OrganikDAO.sol)
+// Organik Contracts v0.0.4 (contracts/OrganikDAO.sol)
 contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
     address owner;
     bytes32 public constant FARMER = keccak256("FARMER");
@@ -153,6 +153,38 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         votes[msg.sender].push(proposalId);
         _mint(msg.sender, 1);
     }
+    // Check if sender is Owner
+    function isOwner() 
+        public
+        view
+        returns (bool) 
+    {
+        if(owner == msg.sender){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    // Check highest role for sender
+    function getRole()
+        public
+        view
+        returns (string memory)
+    {
+        if (!hasRole(SPONSOR, msg.sender) && !hasRole(MEMBER, msg.sender) && !hasRole(FARMER, msg.sender)) {
+            return "FALSE";
+        }else{
+            if (!hasRole(SPONSOR, msg.sender)) {
+                if(!hasRole(MEMBER, msg.sender)){
+                    return "FARMER";
+                }else{
+                    return "MEMBER";
+                }
+            }else{
+                return "SPONSOR";
+            }
+        }
+    }
     // Get ORGANIK Balances
     function getOrganikBal()
         public
@@ -168,30 +200,6 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         returns (uint256)
     {
         return totalSupply();
-    }
-    // Check if sender is Owner
-    function isOwner() public virtual returns (bool) {
-        if(owner == msg.sender){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    // Check highest role for sender
-    function getRole() public virtual returns (string memory) {
-        if (!hasRole(SPONSOR, msg.sender) && !hasRole(MEMBER, msg.sender) && !hasRole(FARMER, msg.sender)) {
-            return "FALSE";
-        }else{
-            if (!hasRole(SPONSOR, msg.sender)) {
-                if(!hasRole(MEMBER, msg.sender)){
-                    return "FARMER";
-                }else{
-                    return "MEMBER";
-                }
-            }else{
-                return "SPONSOR";
-            }
-        }
     }
     // Burn Organik Tokens based in Community Trust
     function burnOrganik(uint256 amount) public virtual {
@@ -245,22 +253,29 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
             revert("This proposal is not selected for funding.");
         if (proposal.totalFundRaised >= proposal.amount)
             revert("Required funds are already provided.");
-        if (getSponsorBal() >= fundAmount){
-            sponsors[msg.sender] -= fundAmount;
-            members[msg.sender] -=  fundAmount;
-            farmers[msg.sender] -=  fundAmount;
-            proposal.totalFundRaised += fundAmount;
-            proposal.funders.push(Funding(msg.sender, fundAmount, block.timestamp));
+        uint256 balance = getSponsorBal();
+        if ( balance >= 1 && balance >= fundAmount){
             if (proposal.totalFundRaised >= proposal.amount) {
-                if(proposal.isCompleted){
-                    // Ignored.
-                }else{
-                    for (uint j = 0; j < proposal.funders.length; j++) {
-                    // Spread mint among all sponsors
-                    _mint(proposal.funders[j].payer, _ceil(proposal.funders[j].amount * (10 ** uint256(decimals()) ), (10 ** uint256(decimals()))) );
+                // Ignored. Already funded.
+            }else{
+                // Add funds to Projects.
+                proposal.totalFundRaised += fundAmount;
+                // Deduct Funds from Sponsor (Map).
+                sponsors[msg.sender] -= fundAmount;
+                members[msg.sender] -=  fundAmount;
+                farmers[msg.sender] -=  fundAmount;
+                proposal.funders.push(Funding(msg.sender, fundAmount, block.timestamp));
+                if (proposal.totalFundRaised >= proposal.amount) {
+                    if(proposal.isCompleted){
+                        // Ignored. Already Completed.
+                    }else{
+                        proposal.isCompleted = true;
+                        for (uint j = 0; j < proposal.funders.length; j++) {
+                        // Spread Organik Rewards among all funding sponsors.
+                        _mint(proposal.funders[j].payer, proposal.funders[j].amount);
+                        }
                     }
                 }
-                proposal.isCompleted = true;
             }
         }else{
             revert("Sponsor does not have enough funds in Treasury.");
@@ -321,6 +336,6 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
             sponsors[msg.sender] += amount;
         }
         // Mint X ORGANIK Tokens
-        _mint(msg.sender, _ceil(amount * (10 ** uint256(decimals()) ), (10 ** uint256(decimals()))) );
+        _mint(msg.sender, amount );
     }
 }
