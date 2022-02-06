@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="generator" content="">
+	<title>Organik DAO</title>
+	<!-- manifest meta -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<!-- Favicons -->
+	<link rel="apple-touch-icon" href="https://cdn.organik.express/dao/favicons/favicon180.png" sizes="180x180">
+	<link rel="icon" href="https://cdn.organik.express/dao/favicons/favicon32.png" sizes="32x32" type="image/png">
+	<link rel="icon" href="https://cdn.organik.express/dao/favicons/favicon16.png" sizes="16x16" type="image/png">
+
+	<!-- Google fonts-->
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+	<!-- style css for this template -->
+	<link href="https://cdn.organik.express/dao/css/style.css" rel="stylesheet" id="style">
+	  
+</head>
+
+<body class="body-scroll d-flex flex-column h-100 dark-bg" data-page="dapp">
+
+	<!-- loader section -->
+	<div class="container-fluid loader-wrap">
+		<div class="row h-100">
+			<div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
+				<div class="loader-cube-wrap mx-auto">
+					<div class="loader-cube1 loader-cube"></div>
+					<div class="loader-cube2 loader-cube"></div>
+					<div class="loader-cube4 loader-cube"></div>
+					<div class="loader-cube3 loader-cube"></div>
+				</div>
+				<p>Great things ahead!<br><strong>Please wait...</strong></p>
+			</div>
+		</div>
+	</div>
+	<!-- loader section ends -->
+	
+	<!-- Begin page content -->
+	<main class="container-fluid h-100">
+		<div class="row h-100 splash">
+			<div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto mt-auto text-center mb-100px d-grid gap-2">
+				<h3 id="text" class="mb-1 splash">Welcome to</h3>
+				<p class="text-muted mb-4 splash"><small>ORGANIK DAO</small></p>
+				<a href="#" target="_self" id="login" class="btn btn-lg btn-default btn-block shadow-sm">Continue with
+					Web3Auth</a>
+				<a href="./" id="launch" class="btn btn-lg btn-default btn-block shadow-sm splash">Enter DAO</a>
+				<a href="#" id="logout" class="btn btn-lg btn-default btn-block shadow-sm splash">Log Out</a>
+				<a href="#" target="_self" class="text-white btn btn-lg btn-link splash">Join Discord</a>
+			</div>
+		</div>
+		
+		<div id="dapp" class="row h-100">
+			<div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto mt-auto text-center mb-100px d-grid gap-2">
+				<p id="address" class="text-muted mb-4"><small>ORGANIK DAO</small></p>
+				<p id="balance" class="text-muted mb-4"><small>ORGANIK DAO</small></p>
+				<a href="./" id="donate" class="btn btn-lg btn-default btn-block shadow-sm splash">Send Donation</a>
+				<a href="#" target="_self" class="text-white btn btn-lg btn-link splash">Join Discord</a>
+			</div>
+		</div>
+		
+		
+	</main>
+	<!-- Page content ends-->
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@toruslabs/torus-embed"></script>
+	<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.js"></script>
+	<script>
+	  (async function init() {
+		$("#login").hide();
+		$("#logout").hide();
+		$("#launch").hide();
+		$("#dapp").hide();
+	
+		const torus = new Torus();
+		window.torus = torus;
+	
+		await torus.init(
+		{
+		  whitelabel: {
+			theme: {
+			  isDark: true,
+			  colors: {
+				torusBrand1: "#282c34",
+			  },
+			},
+			defaultLanguage: "en",
+		  }
+		}
+		);
+	
+		try {
+		  const user = await torus.getUserInfo();
+		  $("#text").text("Logged in as " + user.name + ".");
+		  $("#logout").show();
+		  $("#launch").show();
+		  await initWeb3();
+		} catch (error) {
+		  $("#text").text("Welcome to");
+		  $("#login").show();
+		  $("#launch").hide();
+		}
+	  })();
+	
+	  async function initWeb3() {
+		const web3 = new Web3(window.torus.provider);
+		console.log(window.torus)
+		const address = (await web3.eth.getAccounts())[0];
+		const balance = await web3.eth.getBalance(address);
+		const miniAddress = address.replace(address.substring(6, 38), '...')
+		// console.log("Addr:",address,miniAddress)
+		$("#address").text("Address: " + miniAddress + "");
+		$("#balance").text("Balance: " + balance + "");
+	  }
+	
+	  $("#launch").click(function (event) {
+		  event.preventDefault();
+		  console.log("Launching DAO");
+		  $(".splash").hide();
+		  $('.loader-wrap').fadeIn('slow');
+		  setTimeout(function () {
+			  $('.loader-wrap').fadeOut('slow');
+			  $("#dapp").show();
+		  }, 1500);
+		  
+	  })
+	  
+	  $("#login").click(function (event) {
+		window.torus
+		  .login()
+		  .then(function () {
+			return initWeb3();
+		  })
+		  .then(function () {
+			return window.torus.getUserInfo();
+		  })
+		  .then(function (user) {
+			$("#text").text("Logged in as " + user.name + ".");
+			$("#error").hide();
+			$("#logout").show();
+			$("#launch").show();
+			$("#login").hide();
+		  })
+		  .catch(function (err) {
+			$("#error").text(err.message);
+		  });
+	  });
+	
+	  $("#logout").click(function (event) {
+		window.torus
+		  .logout()
+		  .then(function (res) {
+			$("#text").text("Logged out.");
+			$("#address").text("");
+			$("#balance").text("");
+			$("#login").show();
+			$("#logout").hide();
+			$("#launch").hide();
+		  })
+		  .catch(function (err) {
+			$("#error").text(err.message);
+		  });
+	  });
+	</script>
+	<script>
+		'use strict'
+		$(document).ready(function () {
+		
+			var body = $('body');
+			var bodyParent = $('html');
+		
+			/* page load as iframe */
+			if (self !== top) {
+				body.addClass('iframe');
+			} else {
+				body.removeClass('iframe');
+			}
+		
+			/* menu open close */
+			$('.menu-btn').on('click', function () {
+				if (body.hasClass('menu-open') === true) {
+					body.removeClass('menu-open');
+					bodyParent.removeClass('menu-open');
+				} else {
+					body.addClass('menu-open');
+					bodyParent.addClass('menu-open');
+				}
+		
+				return false;
+			});
+		
+			body.on("click", function (e) {
+				if (!$('.sidebar').is(e.target) && $('.sidebar').has(e.target).length === 0) {
+					body.removeClass('menu-open');
+					bodyParent.removeClass('menu-open');
+				}
+		
+				return true;
+			});
+		
+		
+		
+			/* menu style switch */
+			$('#menu-pushcontent').on('change', function () {
+				if ($(this).is(':checked') === true) {
+					body.addClass('menu-push-content');
+					body.removeClass('menu-overlay');
+				}
+		
+				return false;
+			});
+			$('#menu-overlay').on('change', function () {
+				if ($(this).is(':checked') === true) {
+					body.removeClass('menu-push-content');
+					body.addClass('menu-overlay');
+				}
+		
+				return false;
+			});
+		
+		
+			/* back page navigation */
+			$('.back-btn').on('click', function () {
+				window.history.back();
+		
+				return false;
+			});
+		
+			/* Filter button */
+			$('.filter-btn').on('click', function () {
+				if (body.hasClass('filter-open') === true) {
+					body.removeClass('filter-open');
+				} else {
+					body.addClass('filter-open');
+				}
+		
+				return false;
+			});
+			$('.filter-close').on('click', function () {
+				if (body.hasClass('filter-open') === true) {
+					body.removeClass('filter-open');
+				}
+			});
+		
+			/* scroll y limited container height on page  */
+			var scrollyheight = Number($(window).height() - $('.header').outerHeight() - $('.footer-info').outerHeight()) - 40;
+			$('.scroll-y').height(scrollyheight);
+		
+		});
+		
+		
+		$(window).on('load', function () {
+			setTimeout(function () {
+				$('.loader-wrap').fadeOut('slow');
+			}, 500);
+		
+			/* coverimg */
+			$('.coverimg').each(function () {
+				var imgpath = $(this).find('img');
+				$(this).css('background-image', 'url(' + imgpath.attr('src') + ')');
+				imgpath.hide();
+			})
+		
+			/* main container minimum height set */
+			if ($('.header').length > 0 && $('.footer-info').length > 0) {
+				var heightheader = $('.header').outerHeight();
+				var heightfooter = $('.footer-info').outerHeight();
+		
+				var containerheight = $(window).height() - heightheader - heightfooter - 2;
+				$('.main-container ').css('min-height', containerheight);
+			}
+		
+		
+			/* url path on menu */
+			var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+			$(' .main-menu ul a').each(function () {
+				if (this.href === path) {
+					$(' .main-menu ul a').removeClass('active');
+					$(this).addClass('active');
+				}
+			});
+		
+		});
+		
+		$(window).on('scroll', function () {
+		
+		
+			/* scroll from top and add class */
+			if ($(document).scrollTop() > '10') {
+				$('.header').addClass('active');
+			} else {
+				$('.header').removeClass('active');
+			}
+		});
+		
+		
+		$(window).on('resize', function () {
+			/* main container minimum height set */
+			if ($('.header').length > 0 && $('.footer-info').length > 0) {
+				var heightheader = $('.header').outerHeight();
+				var heightfooter = $('.footer-info').outerHeight();
+		
+				var containerheight = $(window).height() - heightheader - heightfooter;
+				$('.main-container ').css('min-height', containerheight);
+			}
+		});
+	</script>
+	<script>
+		'use strict';
+		$(window).on('load', function () {
+		
+			var body = $('body');
+		
+			switch (body.attr('data-page')) {
+				
+				case "dapp":
+					console.log("Welcome to Organik DAO")	
+				break;
+			}
+		
+		});
+	</script>
+
+</body>
+
+</html>
