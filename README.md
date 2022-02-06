@@ -12,17 +12,23 @@ Special thanks to everyother noob like me that pushed me to keep trying and neve
 
 ### How to Access Organik DAO?
 
-Please make sure you are on the Polygon MUMBAI Network.
+Before you start, please remember that if you are downloading this repo, you need to setup your Moralis API Keys.
 
-Using dao.Organik.Express
+Once the DAPP is running, please make sure you are on the Polygon MUMBAI Network.
+
+1. Using our Organik Server at (DAO.Organik.Express)
 
 [OrganikDAO on Organik Server](https://dao.organik.express/)
 
-Using Unlimited Domains on Polygon: (You need to install a chrome extension)
+2. Using Unlimited Domains on Polygon: (You need to install a chrome extension)
 
 [Organik.DAO](https://organik.dao/)
 
 [UD Extension](https://unstoppabledomains.com/extension)
+
+3. Download HTML and run locally.
+
+[RAW HTML](https://raw.githubusercontent.com/organik-inc/organik-dao/main/src/index.html)
 
 ### How it works?
 
@@ -36,24 +42,34 @@ Some of the main features:
 
 - Donate to Treasury
 > Donate >$50 MATIC = Become a Sponsor.
+> 
 > $20 MATIC = Become a Club Member.
+> 
 > or <$20 MATIC = Become a Farmer Member.
 
 - Submit a Project to the community
 > Add a Name, Description and a Link for more information.
+> 
 > Request up to 1M MATIC to fund your project.
+> 
 > Wait for approval from our Sponsors (24 hours).
+> 
 > Once your project is approved and fully funded, you will receive MATIC in your Account.
 
 - Sponsors:
 > This is a funding DAO not a lending DAO, which means all proposals are funded and based in trust.
+> 
 > Sponsors will get an Organik Token for every MATIC they use to fund projects.
+> 
 > Sponsors will be able to trade this Tokens freely within the community.
 
 - Trading Organik Tokens with Members and Farmers
 > Sponsors will be able to:
+> 
 > Trade this Tokens for free food or anything the Farmers can provide,
+> 
 > Access to educational Permaculture Events at the Farms,
+> 
 > Book a night experience at the Farms. (Permaculture Centers)
 
 ### What's Next?
@@ -70,6 +86,8 @@ Some of the main features:
 - [ ] Talk to some Lawyers and CPAs to discuss using Organik, INC for this DAO.
 
 -----------------------
+
+If you are new to Web3, you gotta checkout this cool links:
 
 ### Links shared over all webinars:
 
