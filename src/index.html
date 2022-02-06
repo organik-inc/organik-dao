@@ -1,0 +1,622 @@
+<!doctype html>
+<!-- Organik DAO by Organik, INC. Deployed during ETH Global Hackathon -->
+<html lang="en" class="h-100">
+<head>
+    <!-- Organik DAO is 100% HTML, no need to use React or anything else. Anybody can change this code and interact with our Smart Contract -->
+    <!-- This version has only been deployed to Mumbai -->
+    <!-- This page changed so much during the last hours, but it was never added as a commit on GitHub -->
+    <!-- Some files are cached by our CDN, but we are trying to get it on IPFS using a Moralis Node -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="generator" content="">
+	<title>Organik DAO</title>
+	
+	<meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Future roadmap: Make this into a PWA and add manifest meta -->
+	<!-- Favicons -->
+	<link rel="apple-touch-icon" href="https://cdn.organik.express/dao/favicons/favicon180.png" sizes="180x180">
+	<link rel="icon" href="https://cdn.organik.express/dao/favicons/favicon32.png" sizes="32x32" type="image/png">
+	<link rel="icon" href="https://cdn.organik.express/dao/favicons/favicon16.png" sizes="16x16" type="image/png">
+
+	<!-- Google fonts-->
+    <!-- I know, this is not the best, but the Fonts are really cool. Can we add Fonts using IPFS? I guess so.-->
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+	<!-- Page Bootstrap style css for this template -->
+	<link href="https://cdn.organik.express/dao/css/style.css" rel="stylesheet" id="style">
+	  
+</head>
+
+<body class="body-scroll d-flex flex-column h-100 dark-bg" data-page="dapp" onload="">
+
+	<!-- loader section -->
+	<div class="container-fluid loader-wrap">
+		<div class="row h-100">
+			<div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
+				<div class="loader-cube-wrap mx-auto">
+					<div class="loader-cube1 loader-cube"></div>
+					<div class="loader-cube2 loader-cube"></div>
+					<div class="loader-cube4 loader-cube"></div>
+					<div class="loader-cube3 loader-cube"></div>
+				</div>
+				<p>Great things ahead!<br><strong>Please wait...</strong></p>
+			</div>
+		</div>
+	</div>
+	<!-- loader section ends -->
+	
+	<!-- Begin page content -->
+	<main class="container-fluid h-100">
+		<div class="row h-100 splash">
+			<div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto mt-auto text-center mb-100px d-grid gap-2">
+				<h3 id="text" class="mb-1 splash">Welcome to</h3>
+				<p class="text-muted mb-4 splash"><small>ORGANIK DAO</small></p>
+				
+				<a href="#" target="_self" id="btn-login" class="btn btn-lg btn-default btn-block shadow-sm MetaMaskConnect">
+					<img alt="MetaMaskLogo" src="https://cdn.organik.express/dao/img/metamask-fox-logo.svg" class="" style="max-width:35px;" />
+					Connect</a>
+					
+				<a href="#" target="_self" id="InstallMetaMask" class="btn btn-lg btn-default btn-block shadow-sm InstallMetaMask">
+				<img alt="MetaMaskLogo" src="https://cdn.organik.express/dao/img/metamask-fox-logo.svg" class="" style="max-width:35px;" />
+				Install</a>
+				<a href="./" id="launch" class="btn btn-lg btn-default btn-block shadow-sm">Enter DAO</a>
+				
+				<a href="#" target="_self" id="btn-logout" class="btn btn-lg btn-default btn-block shadow-sm MetaMaskConnect" style="background-color: #fb73dd;">
+				<img alt="MetaMaskLogo" src="https://cdn.organik.express/dao/img/metamask-fox-logo.svg" class="" style="max-width:35px;" />
+				Disconnect</a>
+				
+				<a href="#" target="_self" class="text-white btn btn-lg btn-link splash">Join Discord</a>
+			</div>
+		</div>
+		
+		<div id="dapp" class="row h-100">
+			<div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto mt-auto text-center mb-100px d-grid gap-2">
+				
+                <a href="#" id="donateStream" class="btn btn-lg btn-default btn-block shadow-sm">Donate via SuperFluid</a>
+
+				<a href="#" id="donateButton" class="btn btn-lg btn-default btn-block shadow-sm">Donate to Treasury</a>
+				
+				<a href="#" id="getCurrentBal" class="btn btn-lg btn-default btn-block shadow-sm">Get Balance</a>
+				
+				<a href="#" id="getRole" class="btn btn-lg btn-default btn-block shadow-sm">Get Role</a>
+				
+				<a href="#" id="submitButton" class="btn btn-lg btn-default btn-block shadow-sm">Submit Proposal</a>
+				
+				<a href="#" id="getProposals" class="btn btn-lg btn-default btn-block shadow-sm">Get Proposals</a>
+				
+				<p id="showAccount" class="text-muted mb-2 showAccount"><small>ORGANIK DAO</small></p>
+				<p id="balance" class="text-muted mb-4"><small>ORGANIK DAO</small></p>
+				<p id="organikBalance" class="text-muted mb-4"><small>ORGANIK DAO</small></p>
+				<p id="slogan" class="text-muted mb-4"><small>ORGANIK DAO</small></p>
+				<a href="#" target="_self" class="text-white btn btn-lg btn-link splash">Join Discord</a>
+			</div>
+		</div>
+		
+		<div id="donate" class="row h-100">
+			<div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto mt-auto pt-4 text-center mb-100px d-grid gap-2">
+				<h3 class="mb-1">One step away</h3>
+				<p class="text-muted mb-4" style="background-color:#00000078;border-radius: 10px;padding: 15px;">Donate MATIC to the Organik Treasury,<br>you will be assigned a role in this DAO depending on your donation.</p>
+		
+				<div class="form-floating is-valid">
+					<input type="phone" class="form-control" value="" placeholder="Enter Amount" id="matic">
+					<label for="matic">Donate MATIC</label>
+				</div>
+				<a href="#" id="confirmDonation" target="_self" class="btn btn-lg btn-default btn-block mt-3" style="background-color:#1fbe3a">CONFIRM</a>
+				<a href="#" class="text-white btn btn-lg btn-link">Wait, tell me more ...</a>
+			</div>
+		</div>
+		
+		<div id="submitNew" class="row h-100">
+			<div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto mt-auto pt-4 text-center mb-100px d-grid gap-2">
+				<h3 class="mb-1">Submit Proposal</h3>
+				<p class="text-muted mb-4" style="background-color:black; opacity:0.8;border-radius: 10px;padding: 15px;">Submit your proposal for approval.<br>All proposals must get at least 3 votes from our Sponsors.</p>
+				
+				<div class="form-floating is-valid">
+					<input type="text" class="form-control" value="" placeholder="Proposal Name" id="proposalName">
+					<label for="otp">Name your proposal</label>
+				</div>
+				
+				<div class="form-floating is-valid">
+					<input type="text" class="form-control" value="" placeholder="Description" id="proposalDesc" maxlength="200">
+					<label for="proposalDesc">Describe your proposal (200 chars)</label>
+				</div>
+				
+				<div class="form-floating is-valid">
+					<input type="text" class="form-control" value="" placeholder="Description" id="proposalLink">
+					<label for="proposalLink">Link to an Image, Website or White-Paper.</label>
+				</div>
+				
+				<div class="form-floating is-valid">
+					<input type="phone" class="form-control" value="" placeholder="Description" id="proposalAmount">
+					<label for="proposalAmount">Total funding you request in MATIC</label>
+				</div>
+				
+				<p class="text-muted mb-2 mt-2" style="background-color:#004effc7;opacity:0.9;border-radius: 10px;padding: 15px;">All Proposals are required to stake 5 MATIC in the Organik Treasury.</p>
+				
+				<div class="form-floating is-valid">
+					<input type="text" class="form-control" value="5 MATIC" placeholder="Enter Amount" id="maticProposal" disabled="disabled">
+					<label for="maticProposal">Stake in Treasury</label>
+				</div>
+				<a href="#" id="submitProposal" target="_self" class="btn btn-lg btn-default btn-block mt-3" style="background-color:#1fbe3a">STAKE &amp; SUBMIT</a>
+				<a href="#" class="text-white btn btn-lg btn-link">Maybe later</a>
+			</div>
+		</div>
+		
+		<div id="success" class="row h-100">
+			<div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto pt-4 text-center align-self-center">
+				<br><br>
+				<img src="https://cdn.organik.express/dao/logo.png" alt="" class="mw-100 mx-auto my-4" style="border-radius:200px;">
+				<br>
+				<h3 class="mb-1">Congratulations!</h3>
+				<p class="text-muted mb-4">Something happened<br>and it was NOT an Error</p>
+			</div>
+			<div class="w-100"></div>
+			<div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto mt-auto pt-4 text-center mb-100px d-grid gap-2">
+				<a href="#" id="successContinue" class="btn btn-lg btn-default btn-block shadow-sm">Continue <i class="bi bi-arrow-right"></i></a>
+			</div>
+		</div>
+		
+	</main>
+	<!-- Page content ends-->
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+	<script src="https://unpkg.com/moralis@1.2.6/dist/moralis.js"></script>
+	<script src="https://cdn.organik.express/dao/abi/json.js?v=0-0-3"></script>
+	<script>
+		'use strict'
+		const daoAddress = '0x8f2231e0dd0fdfc6528ce86e3bc99b4866176ef5'; // v0.0.3x2 Mumbai
+		// This Address is only for Polygon's Mumbai Testnet.
+		var walletAddress = '';
+		
+		$(document).ready(function () {
+			$('#btn-login').hide();
+			$('#btn-logout').hide();
+			$('#launch').hide();
+			$('#InstallMetaMask').hide();
+			$('#dapp').hide();
+			$('#donate').hide();
+			$('#balance').hide();
+			$('#organikBalance').hide();
+			$('#submitNew').hide();
+			$('#success').hide();
+			$('#getRole').hide(); // not ready
+			
+            // Change this KEYs with your own Moralis App Keys (https://moralis.io)
+			const serverUrl = "https://XXXXXXXXXX.usemoralis.com:2053/server";
+			const appId = "XtHPn.................KdI17"; // same here, ok?
+			
+			Moralis.start({ serverUrl, appId });
+			
+            async function donateStream(e){
+				e.preventDefault();
+				alert('Coming Soon!');
+				console.log('This feature is coming soon!');
+				console.log('This page is 100% HTML, and needs JS files to run without React');
+			}
+
+			async function submitProposal(e){
+				const web3Provider = await Moralis.enableWeb3();
+				e.preventDefault();
+				$('.loader-wrap').fadeIn('slow');
+				const options = {
+				  contractAddress: daoAddress,
+				  functionName: "createProposal",
+				  abi: ABI,
+				  msgValue: Moralis.Units.ETH("5"),
+				  params: {
+					  title: `${$("#proposalName").val()}`,
+					  desc: `${$("#proposalDesc").val()}`,
+					  receiverAddress: walletAddress,
+					  amount: `${$("#proposalAmount").val()}`,
+					  imageId: `${$("#proposalLink").val()}`
+				  }
+				};
+				setTimeout(function () {
+					  $('#dapp').show();
+					  $('#donate').hide();
+					  $('#submitNew').hide();
+					  $('.loader-wrap').fadeOut('slow');
+				}, 999);
+				try {
+					const newProposal = await Moralis.executeFunction(options);
+					const receipt = await newProposal.wait();
+					console.log(receipt);
+					return receipt;
+				} catch (error) {
+					console.log(error.data.message);
+					return error;
+				}
+			}
+			
+			async function submitButton(e){
+				e.preventDefault();
+				$('.loader-wrap').fadeIn('slow');
+				setTimeout(function () {
+					  $('#dapp').hide();
+					  $('#submitNew').show();
+					  $('#donate').hide();
+					  $('.loader-wrap').fadeOut('slow');
+				}, 999);
+				
+			}
+			
+			async function getProposals(e){
+				const web3Provider = await Moralis.enableWeb3();
+				e.preventDefault();
+				$('.loader-wrap').fadeIn('slow');
+				const options = {
+				  contractAddress: daoAddress,
+				  functionName: "getAllProposals",
+				  abi: ABI
+				};
+				setTimeout(function () {
+					  $('#dapp').show();
+					  $('#donate').hide();
+					  $('#submitNew').hide();
+					  $('.loader-wrap').fadeOut('slow');
+				}, 999);
+				try {
+					const proposals = await Moralis.executeFunction(options);
+					console.log(proposals)
+					return proposals;
+				} catch (error) {
+					console.log(error.data.message);
+					return error;
+				}
+			}
+			
+			async function getRole(e){
+				const web3Provider = await Moralis.enableWeb3();
+				e.preventDefault();
+				$('.loader-wrap').fadeIn('slow');
+				const options = {
+				  contractAddress: daoAddress,
+				  functionName: "getRole",
+				  abi: ABI
+				};
+				setTimeout(function () {
+					  $('#dapp').show();
+					  $('#donate').hide();
+					  $('#submitNew').hide();
+					  $('.loader-wrap').fadeOut('slow');
+				}, 999);
+				try {
+					const role = await Moralis.executeFunction(options);
+					console.log(role)
+					return role;
+				} catch (error) {
+					console.log(error.data.message);
+					return error;
+				}
+			}
+			
+			async function getCurrentBal(e){
+				const web3Provider = await Moralis.enableWeb3();
+				e.preventDefault();
+				$('.loader-wrap').fadeIn('slow');
+				const options = {
+				  contractAddress: daoAddress,
+				  functionName: "getFarmerBal",
+				  abi: ABI
+				};
+				setTimeout(function () {
+					  $('#dapp').show();
+					  $('#donate').hide();
+					  $('#submitNew').hide();
+					  $('.loader-wrap').fadeOut('slow');
+				}, 999);
+				try {
+					const balance = await Moralis.executeFunction(options);
+					console.log(Moralis.Units.FromWei(balance))
+					const options2 = {
+					  contractAddress: daoAddress,
+					  functionName: "getOrganikBal",
+					  abi: ABI
+					};
+					try {
+						const balance2 = await Moralis.executeFunction(options2);
+						console.log(Moralis.Units.FromWei(balance2))
+					} catch (error) {
+						console.log(error.data.message);
+					}
+				} catch (error) {
+					console.log(error.data.message);
+				}
+			}
+			
+			async function donateNow(e){
+				e.preventDefault();
+				$('.loader-wrap').fadeIn('slow');
+				
+				const donateAmount = $('#matic').val()
+				const options = {
+				  contractAddress: daoAddress,
+				  functionName: "createStakeholder",
+				  abi: ABI,
+				  msgValue: Moralis.Units.ETH(donateAmount)
+				};
+				
+				const transaction = await Moralis.executeFunction(options);
+				try {
+					const receipt = await transaction.wait();
+					console.log(receipt)
+				} catch (error) {
+					console.log(error.data.message);
+				}
+				
+				setTimeout(function () {
+					  console.log("Send Money to Contract");
+					  $('#dapp').show();
+					  $('#donate').hide();
+					  $('#submitNew').hide();
+					  $('.loader-wrap').fadeOut('slow');
+				}, 999);
+			}
+			
+			async function donate(e){
+				const web3Provider = await Moralis.enableWeb3();
+				
+				e.preventDefault();
+				$('#dapp').hide();
+				$('#donate').show();
+				$('#submitNew').hide();
+				
+			}
+			
+			async function login() {
+			  $('.loader-wrap').fadeIn('slow');
+			  let user = Moralis.User.current();
+				if (!user) {
+				  user = await Moralis.authenticate({ signingMessage: "Organik DAO is requesting your signature to approve login authorization!\n\nYou will NOT be charged for this interaction." })
+					.then(function (user) {
+					  console.log("logged in user:", user);
+					  walletAddress = user.get("ethAddress");
+					  console.log(walletAddress);
+					  $('#btn-login').hide();
+					  $('#btn-logout').show();
+					  $('#launch').show();
+					})
+					.catch(function (error) {
+					  console.log(error);
+					});
+				}else{
+					console.log("logged in user:", user);
+					walletAddress = user.get("ethAddress");
+				    console.log(walletAddress);
+					$('#btn-login').hide();
+					$('#btn-logout').show();
+				}
+				setTimeout(function () {
+					$('.loader-wrap').fadeOut('slow');
+				}, 999);
+			}
+			
+			async function logOut() {
+				$('.loader-wrap').fadeIn('slow');
+				await Moralis.User.logOut();
+				setTimeout(function () {
+					  console.log("logged out");
+					  $('#btn-login').show();
+					  $('#btn-logout').hide();
+					  $('#launch').hide();
+					  $('.loader-wrap').fadeOut('slow');
+				}, 999);
+			}
+			
+			async function launchDapp(event) {
+			  event.preventDefault();
+			  const miniAddress = walletAddress.replace(walletAddress.substring(6, 38), '...')
+			  console.log("launchDapp");
+			  $('.loader-wrap').fadeIn('slow');
+			  const balance  = await ethereum.request({ method: 'eth_getBalance' , params: [ walletAddress, 'latest' ]})
+			  // // Returns a hex value of Wei
+			  const wei = parseInt(balance, 16)
+			  const gwei = (wei / Math.pow(10, 9)) // parse to Gwei
+			  const eth = (wei / Math.pow(10, 18))// parse to ETH
+			  
+			  // console.log(wei,gwei,eth, balance)
+			  $('.showAccount').show();
+			  $('.showAccount').text(`Polygon: ${miniAddress}`);
+			  
+			  $('#balance').show();
+			  $('#balance').text(`BALANCE: ${eth} MATIC`);
+			  
+			  setTimeout(function () {
+		  			$('.splash').hide();
+					$('#dapp').show();
+					$('#launch').hide();
+					$('#btn-logout').hide();
+					$('.loader-wrap').fadeOut('slow');
+				  }, 999);
+			}
+			
+			document.getElementById("btn-login").onclick = login;
+			document.getElementById("btn-logout").onclick = logOut;
+			document.getElementById("launch").onclick = launchDapp;
+			document.getElementById("donateButton").onclick = donate;
+			document.getElementById("confirmDonation").onclick = donateNow;
+			document.getElementById("getCurrentBal").onclick = getCurrentBal;
+			document.getElementById("getRole").onclick = getRole;
+			document.getElementById("getProposals").onclick = getProposals;
+			document.getElementById("submitButton").onclick = submitButton;
+			document.getElementById("submitProposal").onclick = submitProposal;
+			document.getElementById("donateStream").onclick = donateStream;
+			
+			let user = Moralis.User.current();
+			  if (!user) {
+				  console.log('not logged in')
+				  $('#btn-login').show();
+				  $('#btn-logout').hide();
+			  }else{
+				  $('.loader-wrap').fadeIn('slow');
+				  walletAddress = user.get("ethAddress");
+				  console.log(walletAddress);
+				  setTimeout(function () {
+					  	console.log('Logged in', user)
+						$('#launch').show();
+						$('#btn-logout').show();
+				  }, 999);
+			  }
+			
+		})
+	</script>
+	<script>
+		'use strict'
+		$(document).ready(function () {
+			
+			var body = $('body');
+			var bodyParent = $('html');
+		
+			/* page load as iframe */
+			if (self !== top) {
+				body.addClass('iframe');
+			} else {
+				body.removeClass('iframe');
+			}
+		
+			/* menu open close */
+			$('.menu-btn').on('click', function () {
+				if (body.hasClass('menu-open') === true) {
+					body.removeClass('menu-open');
+					bodyParent.removeClass('menu-open');
+				} else {
+					body.addClass('menu-open');
+					bodyParent.addClass('menu-open');
+				}
+		
+				return false;
+			});
+		
+			body.on("click", function (e) {
+				if (!$('.sidebar').is(e.target) && $('.sidebar').has(e.target).length === 0) {
+					body.removeClass('menu-open');
+					bodyParent.removeClass('menu-open');
+				}
+		
+				return true;
+			});
+		
+		
+		
+			/* menu style switch */
+			$('#menu-pushcontent').on('change', function () {
+				if ($(this).is(':checked') === true) {
+					body.addClass('menu-push-content');
+					body.removeClass('menu-overlay');
+				}
+		
+				return false;
+			});
+			$('#menu-overlay').on('change', function () {
+				if ($(this).is(':checked') === true) {
+					body.removeClass('menu-push-content');
+					body.addClass('menu-overlay');
+				}
+		
+				return false;
+			});
+		
+		
+			/* back page navigation */
+			$('.back-btn').on('click', function () {
+				window.history.back();
+		
+				return false;
+			});
+		
+			/* Filter button */
+			$('.filter-btn').on('click', function () {
+				if (body.hasClass('filter-open') === true) {
+					body.removeClass('filter-open');
+				} else {
+					body.addClass('filter-open');
+				}
+		
+				return false;
+			});
+			$('.filter-close').on('click', function () {
+				if (body.hasClass('filter-open') === true) {
+					body.removeClass('filter-open');
+				}
+			});
+		
+			/* scroll y limited container height on page  */
+			var scrollyheight = Number($(window).height() - $('.header').outerHeight() - $('.footer-info').outerHeight()) - 40;
+			$('.scroll-y').height(scrollyheight);
+		
+		});
+		
+		
+		$(window).on('load', function () {
+			setTimeout(function () {
+				$('.loader-wrap').fadeOut('slow');
+			}, 500);
+		
+			/* coverimg */
+			$('.coverimg').each(function () {
+				var imgpath = $(this).find('img');
+				$(this).css('background-image', 'url(' + imgpath.attr('src') + ')');
+				imgpath.hide();
+			})
+		
+			/* main container minimum height set */
+			if ($('.header').length > 0 && $('.footer-info').length > 0) {
+				var heightheader = $('.header').outerHeight();
+				var heightfooter = $('.footer-info').outerHeight();
+		
+				var containerheight = $(window).height() - heightheader - heightfooter - 2;
+				$('.main-container ').css('min-height', containerheight);
+			}
+		
+		
+			/* url path on menu */
+			var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+			$(' .main-menu ul a').each(function () {
+				if (this.href === path) {
+					$(' .main-menu ul a').removeClass('active');
+					$(this).addClass('active');
+				}
+			});
+		
+		});
+		
+		$(window).on('scroll', function () {
+		
+		
+			/* scroll from top and add class */
+			if ($(document).scrollTop() > '10') {
+				$('.header').addClass('active');
+			} else {
+				$('.header').removeClass('active');
+			}
+		});
+		
+		
+		$(window).on('resize', function () {
+			/* main container minimum height set */
+			if ($('.header').length > 0 && $('.footer-info').length > 0) {
+				var heightheader = $('.header').outerHeight();
+				var heightfooter = $('.footer-info').outerHeight();
+				var containerheight = $(window).height() - heightheader - heightfooter;
+				$('.main-container ').css('min-height', containerheight);
+			}
+		});
+	</script>
+	<script>
+		'use strict';
+		$(window).on('load', function () {
+		
+			var body = $('body');
+		
+			switch (body.attr('data-page')) {
+				
+				case "dapp":
+					console.log("Welcome to Organik DAO")	
+				break;
+			}
+		
+		});
+	</script>
+</body>
+</html>
