@@ -1,73 +1,76 @@
 # organik-dao
 Created at ethglobal Hackathon 2022 - Feb 4th
 
-Hi! Welcome to the first commit for Organik DAO.
+Hi! Welcome to the first final commit for Organik DAO.
 
 This is a project built for the ETH Global Polygon Hackathon.
 
 I'm very happy to have attended most of the webinars/masterclasses from every one in this space.
 Special thanks to everyother noob like me that pushed me to keep trying and never give up.
 
+-----------------------
+
+### How to Access Organik DAO?
+
+Please make sure you are on the Polygon MUMBAI Network.
+
+Using dao.Organik.Express
+
+[OrganikDAO on Organik Server](https://dao.organik.express/)
+
+Using Unlimited Domains on Polygon: (You need to install a chrome extension)
+
+[Organik.DAO](https://organik.dao/)
+
+[UD Extension](https://unstoppabledomains.com/extension)
+
+### How it works?
+
+[OrganikDAO Contract](./contracts/OrganikDAO.sol)
+
+First we created this smart contract.
+
+It's a Funding DAO built on Polygon.
+
+Some of the main features:
+
+- Donate to Treasury
+> Donate >$50 MATIC = Become a Sponsor.
+> $20 MATIC = Become a Club Member.
+> or <$20 MATIC = Become a Farmer Member.
+
+- Submit a Project to the community
+> Add a Name, Description and a Link for more information.
+> Request up to 1M MATIC to fund your project.
+> Wait for approval from our Sponsors (24 hours).
+> Once your project is approved and fully funded, you will receive MATIC in your Account.
+
+- Sponsors:
+> This is a funding DAO not a lending DAO, which means all proposals are funded and based in trust.
+> Sponsors will get an Organik Token for every MATIC they use to fund projects.
+> Sponsors will be able to trade this Tokens freely within the community.
+
+- Trading Organik Tokens with Members and Farmers
+> Sponsors will be able to:
+> Trade this Tokens for free food or anything the Farmers can provide,
+> Access to educational Permaculture Events at the Farms,
+> Book a night experience at the Farms. (Permaculture Centers)
+
+### What's Next?
+
+- [ ] Open this project to the community, bring more developers. HTML is all they need.
+- [ ] Teach more people how Web3 Works.
+- [ ] Still working on integrating Super Fluid (using Moralis)
+- [ ] Improve every single Error use-case.
+- [ ] Improve UX to be able to Vote (Yes or No, Similar to Swipe-LeftRight).
+- [ ] Improve UX for users without Metamask.
+- [ ] Use Moralis DB to decrease the gas used on heavy transactions.
+- [ ] Grow the community and start funding projects around the world.
+- [ ] Write some great Unit Tests (didn't have enough time).
+- [ ] Talk to some Lawyers and CPAs to discuss using Organik, INC for this DAO.
 
 -----------------------
 
-
 ### Links shared over all webinars:
 
-[ELI5 ZK STUFF](https://www.youtube.com/watch?v=fOGdb1CTu5c)
-
-[Cool Unity 3D Game with Web3 Login](https://github.com/ethereum-boilerplate/ethereum-unity-boilerplate)
-
-[This page. (Why is this even here? > Bc you always forget this link anyway)](https://github.com/organik-inc/organik-dao)
-
-[Get FREE MATIC, lol testnet](https://faucet.polygon.technology/)
-
-[DONUT OPEN](https://www.youtube.com/watch?v=lUiBKnG9ozo)
-
-[Some cool old guys at the summit chat](https://www.chronicle.io/)
-
-[NFT FOR DUMMIES](https://www.youtube.com/watch?v=nMCB-4EqQXQ)
-
-[BUY SOME MATIC BUT KYC Poopoo](https://www.moonpay.com/buy/matic)
-
-[April 9th, 2021. Nader Dabit. Aprox 1 Hour Tutorial](https://dev.to/dabit3/the-complete-guide-to-full-stack-ethereum-development-3j13)
-
-[Can a Man Live?](https://medium.com/@austin_48503/%EF%B8%8Fethereum-dev-speed-run-bd72bcba6a4c)
-
-[Avoid this link, 💯 Waste of "time"](https://twitter.com/home)
-
-[Play this video when you sleep](https://www.youtube.com/watch?v=M576WGiDBdQ)
-
-[Austin keeps talking about this](https://speedrunethereum.com/challenge/simple-nft-example)
-
-[What da Punk is this??](https://punkwallet.io/)
-
-[Vitalik meets Nietzche](https://vitalik.ca/general/2022/01/26/soulbound.html)
-
-[Is this a good starting point?](https://learn.figment.io/tutorials/funding-dao-polygon)
-
-[Covalent: Helps you pull data from NFTs as long as it's not lazy minted](https://www.covalenthq.com/docs/api/#/overview)
-
-[Fiat-On Ramp, but not for everybody... ...](https://docs.polygon.technology/docs/develop/fiat-on-ramp/)
-
-[Free Speedy Nodes](https://admin.moralis.io/speedyNodes)
-
-[Wait, what does that mean anyway?](https://docs.moralis.io/speedy-nodes/what-are-speedy-nodes)
-
-[If Polygon was called Seinfield](https://images-cdn.9gag.com/photo/a27eQNY_700b.jpg)
-
-[Mumbai Scan, like others scans but Mumbaiiii](https://mumbai.polygonscan.com/)
-
-[Web3 Login, aka Torus, aka Web3Auth. Justin is using them, why?? Is 16az behind this too??](https://www.youtube.com/watch?v=DREepssv8OE)
-
-[SmartContract for Dummies: You should have just started with this ^_^' ](https://consensys.github.io/smart-contract-best-practices/)
-
-[Solidity based VAULT: Securely holds ETH whilst lending STABLE TOKEN to users on Ethereum network](https://github.com/alejoacosta74/ethereum-erc20token-vault)
-
-[Polygon Academy : Starter Kits (Unreleased Version)](https://github.com/Polygon-Academy/starter-kits)
-
-[2 hours OpenSea Clone, Ok. but... whyyy?? ](https://www.youtube.com/watch?v=WZWCzsB1xUE)
-
-[Learn and Paid](https://talent.moralis.io/)
-
-[Mage](https://moralis.io/mage/)
+[LINKS.md](./LINKS.md)
