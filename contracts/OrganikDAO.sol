@@ -8,7 +8,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-// Organik Contracts v0.0.4 (contracts/OrganikDAO.sol)
+// Organik Contracts v0.0.5 (contracts/OrganikDAO.sol)
 contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
     address owner;
     bytes32 public constant FARMER = keccak256("FARMER");
@@ -151,7 +151,7 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         if (inFavour) proposal.voteInFavor++;
         else proposal.voteAgainst++;
         votes[msg.sender].push(proposalId);
-        _mint(msg.sender, 1);
+        _mint(msg.sender, 1 * (10 ** uint256(decimals()) ) );
     }
     // Check if sender is Owner
     function isOwner() 
@@ -272,7 +272,7 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
                         proposal.isCompleted = true;
                         for (uint j = 0; j < proposal.funders.length; j++) {
                         // Spread Organik Rewards among all funding sponsors.
-                        _mint(proposal.funders[j].payer, proposal.funders[j].amount);
+                        _mint(proposal.funders[j].payer, proposal.funders[j].amount * (10 ** uint256(decimals()) ) );
                         }
                     }
                 }
@@ -338,4 +338,4 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
         // Mint X ORGANIK Tokens
         _mint(msg.sender, amount );
     }
-}
+}_
