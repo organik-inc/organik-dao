@@ -272,7 +272,8 @@ contract OrganikDAO is ReentrancyGuard, AccessControl, ERC20 {
                         proposal.isCompleted = true;
                         for (uint j = 0; j < proposal.funders.length; j++) {
                         // Spread Organik Rewards among all funding sponsors.
-                        _mint(proposal.funders[j].payer, proposal.funders[j].amount * (10 ** uint256(decimals()) ) );
+                        // _mint(proposal.funders[j].payer, proposal.funders[j].amount * (10 ** uint256(decimals()) ) );
+                        _mint(proposal.funders[j].payer, proposal.funders[j].amount ) );
                         }
                     }
                 }
