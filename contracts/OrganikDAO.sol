@@ -1,10 +1,10 @@
 /** /
-    ORGANIK DAO
-    February 2022
-    Deployed by Organik, INC.
+    ORGANIK DAO v0.1
+    July 2022
+    by Organik, INC.
 /**/
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.12;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
