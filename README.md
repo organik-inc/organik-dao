@@ -1,12 +1,23 @@
-# organik-dao
-Created at ethglobal Hackathon 2022 - Feb 4th
+# organik-DAO
+Built at a Hackathon @ 2022.
 
-Hi! Welcome to the first final commit for Organik DAO.
+# What is Organik DAO?
 
-This is a project built for the ETH Global Polygon Hackathon.
+A Global Farmer's Market.
+A community-center organization to fund projects to buy and sell fruits & vegetables around the world.
 
-I'm very happy to have attended most of the webinars/masterclasses from every one in this space.
-Special thanks to everyother noob like me that pushed me to keep trying and never give up.
+## Sponsors
+
+This membership level allows you to vote on which projects should be funded by the treasury.
+
+## Farmers
+
+Get funded to grow your own farm in your house.
+
+## Members
+
+Pay a small membership fee and access our Farmer's Market worlwide.
+Purchase fruits and vegetables from local Farmers in every city.
 
 -----------------------
 
